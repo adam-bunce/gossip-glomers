@@ -27,10 +27,12 @@ type Server struct {
 var mbnImplServer MultiNodeBroadcaster = &Server{}
 
 func (s *Server) startBufferCheck() {
+	ticker := time.NewTicker(300 * time.Millisecond)
+
 	go func() {
 		for {
 			select {
-			case <-time.After(300 * time.Millisecond):
+			case <-ticker.C:
 				s.sendBuffer()
 			}
 		}
